@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" onkeypress="handle(event)" oninput="handle(event)"/>
+<script>
+
+function handle(event) {
+    const template = new RegExp(/^[1-9]{1}[0-9]{0,}[.]?[0-9]{0,2}$/);
+    const element = event.target;
+    const cursorPositionLeft = element.selectionStart;
+    const cursorPositionRight = element.selectionEnd;
+    const inputText = element.value;
+    const projectedValue = String(inputText).slice(0, cursorPositionLeft) + event.key + String(inputText).slice(cursorPositionRight);
+    const check = template.test(projectedValue);
+    console.log(event);
+    if (event.key || event.data) {
+    event.preventDefault();
+    if (check) {
+        element.value = projectedValue;
+        element.selectionStart = cursorPositionLeft + 1;
+        element.selectionEnd = cursorPositionLeft + 1;
+    }
+} else {
+if (!check) {
+    event.preventDefault();
+}
+}
+}
+</script>
+</body>
+</html>
